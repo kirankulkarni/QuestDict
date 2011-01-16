@@ -1,0 +1,14 @@
+%h1 Questworld Dictionary
+%form{:action=> "/search", :method => "get"}
+  %p
+    %input{:type => "submit", :value => "Define: "}
+    %input{:type => "textbox", :name => "word", :id => "word"}    
+- unless @word.empty?
+  %h2== Word: #{@word}
+
+  %p Meanings:
+  %ol
+    - @meanings.each do |meaning|
+      %li= meaning[:meaning]
+
+
