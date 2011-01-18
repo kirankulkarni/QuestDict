@@ -7,7 +7,8 @@ require 'hpricot'
 class QuestDict
   attr_reader :db
   def initialize (database,collection)
-    @db = Mongo::Connection.new.db(database).collection(collection) 
+    @db = Mongo::Connection.new.db(database).collection(collection)
+    @wordsdb = Mongo::Connection.new.db(database).collection(collection + '_words')
   end
 
   # Following method finds a given word in dictionary databse
@@ -25,10 +26,7 @@ class QuestDict
       end
     end
 
-    unless meanings.empty?
-      return meanings
-    end
-    return Array.new
+    return meanings
   end
 
   # Following method adds word entry into database.
@@ -39,20 +37,24 @@ class QuestDict
   #                               "meaning" => "An expression of greeting",
   #                               "category" => "v. p.p."})
   # Output: A Boolean specifying operation was successful or not.
-  def add_word (word_entry)
-    if word_entry.class.to_s == "Hash"
-      if word_entry.has_key?("word") && word_entry.has_key?("meaning")
+  def add_word (word_meaning_entry)
+    if word_meaning_entry.class.to_s == "Hash"
+      if word_meaning_entry.has_key?("word") && word_meaning_entry.has_key?("meaning")
        
-        unless word_entry["word"].strip.empty? || word_entry["meaning"].strip.empty?
+        unless word_meaning_entry["word"].strip.empty? || word_meaning_entry["meaning"].strip.empty?
        
-          word_entry["word"] = word_entry["word"].strip.downcase
-          word_entry["meaning"] = word_entry["meaning"].strip
+          word_meaning_entry["word"] = word_meaning_entry["word"].strip.downcase
+          word_meaning_entry["meaning"] = word_meaning_entry["meaning"].strip
           
           # Search whether database has Meaning entries for this word
-          meanings = find_meanings(word_entry["word"])
+          meanings = find_meanings(word_meaning_entry["word"])
          
-          if meanings.empty?  # New word, add word_entry
-            @db.insert(word_entry)  # catch Databse insertion exceptions
+          if meanings.empty?  # New word, add word_meaning_entry
+            @db.insert(word_meaning_entry)  # catch Databse insertion exceptions
+            word_entry = {"word" => word_meaning_entry["word"]}
+            puts word_entry
+            puts "Here for #{word_meaning_entry["word"]}"
+            @wordsdb.insert(word_entry)
             return true
           end
 
@@ -60,10 +62,10 @@ class QuestDict
           # already exists or not.
           meaning_found = false
           meanings.each do |meaning_entry|
-            meaning_found = true if meaning_entry.has_value?(word_entry["meaning"])
+            meaning_found = true if meaning_entry.has_value?(word_meaning_entry["meaning"])
           end
-          unless meaning_found # new meaning, add word_entry
-            @db.insert(word_entry) #catch Database insertion exceptions
+          unless meaning_found # new meaning, add word_meaning_entry
+            @db.insert(word_meaning_entry) #catch Database insertion exceptions
             return true
           end
         end
@@ -127,6 +129,20 @@ class QuestDict
       return false
     end
     return true
+  end
+
+  # Following function returns all the words that start with given
+  # letter.
+  # Input : takes a single letter
+  # Output: Words: Array which has all the words that starts with
+  #                given letter
+  
+  def words_sw_letter(letter)
+    words = []
+    unless letter.empty?
+      @wordsdb.find({"word" => /^#{letter[0]}/}).each { |word_entry| words << word_entry["word"]}
+    end
+    return words
   end
 
 end
