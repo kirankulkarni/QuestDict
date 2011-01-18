@@ -1,0 +1,8 @@
+* Following changes needs to be done in QuestDict interface
+  - find_meanings should return only meanings (not the did you mean suggestions)
+  - create a databse which will store only "word" for which meanings are present in normal database
+  - provide interface which will give all words which starts with particular word letter say 'A'
+  - provide interface which will use the above interface and will find words for "Did you mean suggestion?"
+  - provide interface which will modify the word
+  - provide interface which will delete the word
+
