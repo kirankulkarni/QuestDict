@@ -21,7 +21,7 @@ get '/search' do
       # Strip the word string, Get only one word (multiple word searching
       # not supported) and downcase it for searching.
       @word = params[:word].strip.split(" ")[0].downcase
-      flag,@meanings = questdict.find_meanings(@word)
+      @meanings = questdict.find_meanings(@word)
     end
   end
   haml :dictword

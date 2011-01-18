@@ -12,12 +12,8 @@ class QuestDict
 
   # Following method finds a given word in dictionary databse
   # Input: word (string) you need to search
-  # Output: Flag (Boolean; word found or not)
-  #         Meaning (Array; if Flag = TRUE, this will contain
-  #                                         collection as entries
-  #                            Flag = false, then "Did you mean?" word
-  #                                          list. currently this
-  #                                          feature is not implemented)
+  # Output:  Meaning (Array; if entries found then will have hashed
+  #                   entries, else will be empty)
   
   def find_meanings (word)
     word = word.strip
@@ -30,9 +26,9 @@ class QuestDict
     end
 
     unless meanings.empty?
-      return true, meanings
+      return meanings
     end
-    return false,Array.new
+    return Array.new
   end
 
   # Following method adds word entry into database.
@@ -53,9 +49,9 @@ class QuestDict
           word_entry["meaning"] = word_entry["meaning"].strip
           
           # Search whether database has Meaning entries for this word
-          flag, meanings = find_meanings(word_entry["word"])
+          meanings = find_meanings(word_entry["word"])
          
-          unless flag  # New word, add word_entry
+          if meanings.empty?  # New word, add word_entry
             @db.insert(word_entry)  # catch Databse insertion exceptions
             return true
           end
