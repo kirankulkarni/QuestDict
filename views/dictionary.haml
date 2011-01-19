@@ -1,5 +1,8 @@
-%h1 Questworld Dictionary
 %form{:action=> "/search", :method => "get"}
   %p
-    %input{:type => "submit", :value => "Define: "}
-    %input{:type => "textbox", :name => "word", :id => "word"}    
+    %input{:type => "textbox", :name => "word", :id => "word"}
+    %input{:type => "submit", :value => "Search"}
+    
+%hr/
+%p#credits
+  %a{:href => "/credits"}Credits

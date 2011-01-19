@@ -55,3 +55,8 @@ post '/load' do
   end
   haml :uploadsuccess, :layout => false
 end
+
+
+get '/credits' do
+  haml :credits
+end

@@ -1,12 +1,12 @@
 %pre
   You must format all you entries in following format:
 
-  Word       - should be enclosed in <b> </b> HTML tag                                                   
-  Category   - part of speech or type will be enclosed in (<i> </i>)                                   
-  Meaning    - It follows character ')' after category                                                 
-  And this whole entry will be enclosed in <p></p> HTML tag. 
+  <b>Word</b>       - should be enclosed in <b>&lt;b&gt;&lt;/b&gt;</b> HTML tag                                                   
+  <b>Category</b>   - part of speech or type will be enclosed in <b>(&lt;i&gt; &lt;/i&gt;)</b>                                   
+  <b>Meaning</b>    - It follows character ')' after category                                                 
+  And this <b>whole entry</b> will be enclosed in <b>&lt;p&gt;&lt;/p&gt;</b> HTML tag. 
                                           
-  e.g. <P><B>Named</B> (<I>imp. & p. p.</I>) of Name</P> 
+  <b>e.g. &lt;P&gt;&lt;B&gt;Hello&lt;/B&gt; (&lt;I&gt;interj. n.&lt;/I&gt;) Used to greet someone&lt;/P&gt;</b>
 
   I used Online Plain Text English Dictionary (http://www.mso.anu.edu.au/~ralph/OPTED/) to write this app.
   
@@ -14,8 +14,9 @@
 %form{:method =>"post",:enctype =>"multipart/form-data"}
   %input{:type =>"file",:name =>"file"}
   %input{:type =>"submit",:value =>"Upload"}
-
+%hr/
 %form{:action => "/load", :method => "post"}
   %p
-    %input{:type => "submit", :value => "Define: "}
-    %input{:type => "textbox", :name => "link", :id => "link"}    
+    %input{:type => "textbox", :name => "link", :id => "link"}
+    %input{:type => "submit", :value => "Load from URL"}
+        

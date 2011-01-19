@@ -1,4 +1,12 @@
 div#outerwrapper {
     margin:auto;
-    width:30%;
+    width:60%;
+}
+h1#title {
+    margin:auto;
+    width:330px;
+}
+p#credits {
+    margin:auto;
+    width:10%;
 }
