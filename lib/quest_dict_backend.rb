@@ -52,8 +52,6 @@ class QuestDict
           if meanings.empty?  # New word, add word_meaning_entry
             @db.insert(word_meaning_entry)  # catch Databse insertion exceptions
             word_entry = {"word" => word_meaning_entry["word"]}
-            puts word_entry
-            puts "Here for #{word_meaning_entry["word"]}"
             @wordsdb.insert(word_entry)
             return true
           end
