@@ -143,5 +143,69 @@ class QuestDict
     return words
   end
 
+  #Following function modifies a word-meaning entry
+  # Input : wordentry (Hash e.g. {"word" => "hello",
+  #                               "old_meaning" => "An expression of greeting",
+  #                               "new_meaning" => "Way to start conversation",
+  #                               "category" => "v. p.p."})
+  # Output: A Boolean specifying operation was successful or not.
+  def modify_word(word_meaning_entry)
+    if word_meaning_entry.class.to_s == "Hash"
+      if word_meaning_entry.has_key?("word") && word_meaning_entry.has_key?("old_meaning")
+        
+        unless word_meaning_entry["word"].strip.empty? || word_meaning_entry["old_meaning"].strip.empty?
+          #since word & meaning both constitutes primary key, we can
+          #use find_one here. 
+          db_entry = @db.find_one({"word" => new_entry["word"],"meaning" => new_entry["old_meaning"]})
+
+          if db_entry.empty? #if no entry found, how can we modify it?
+            #update this db_entry with values we need to modify
+            word_meaning_entry.each_pair do | key, value |
+              next if key == "word" || key == "old_meaning" || key == "_id"
+              if key == "new_meaning" && !(value.strip.empty?)
+                db_entry["meaning"] = value.strip
+              else
+                db_entry[key] = value.strip
+              end
+            end
+            @db.update({"_id" => db_entry["_id"]},db_entry)
+            return true
+          end
+          
+        end
+      end
+    end
+    return false
+  end
+
+  #Following function removes a word entry/word entries
+  # Input : wordentry (Hash e.g. {"word" => "hello",
+  #                               "meaning" => "An expression of greeting"}
+  # Output: Always returns TRUE, until some exception is caught
+  def remove_word(word_entry)
+    if word_meaning_entry.class.to_s == "Hash"
+      unless word_entry["word"].strip.empty?
+        if word_entry.has_key?("meaning")
+          unless word_entry["meaning"].strip.empty?
+            #remove a particular entry from word_meaning db and check count if
+            #there are 0 entries in words_db then remove the word from words
+            #db
+            word_entry["word"] = word_entry["word"].strip
+            word_entry["meaning"] = word_entry["meaning"].strip
+            @db.remove(word_entry)
+            @wordsdb.remove({"word" => word_entry["word"]}) if @db.find({"word" => word_entry["word"]}).count == 0
+          end
+        else
+          #remove word from words db and all meanings from word_meaning db
+          word_entry["word"] = word_entry["word"].strip
+          @db.remove(word_entry)
+          @wordsdb.remove(word_entry)
+        end  
+      end
+    end
+    return True
+  end
+  
+
 end
 

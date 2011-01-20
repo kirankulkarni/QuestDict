@@ -2,7 +2,7 @@
   - find_meanings should return only meanings (not the did you mean suggestions) #done @done
   - create a databse which will store only "word" for which meanings are present in normal database #done @done
   - provide interface which will give all words which starts with particular word letter say 'A'    #done @done
-  - provide interface which will modify the word
-  - provide interface which will delete the word
+  - provide interface which will modify the word #done @done
+  - provide interface which will delete the word #done @done
   - provide interface which will use the above interface and will find words for "Did you mean suggestion?" 
 
