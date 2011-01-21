@@ -1,4 +1,4 @@
-require 'heroku-sinatra-app'
+require './questdict.rb'
 
 
 run Sinatra::Application
