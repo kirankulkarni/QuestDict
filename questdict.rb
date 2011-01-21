@@ -4,7 +4,7 @@ require 'open-uri'
 #require File.dirname(__FILE__) + 'lib/all'
 require_relative './lib/quest_dict_backend.rb'
 
-questdict = QuestDict.new("dictionary","english")
+questdict = QuestDict.new("english")
 # configure :developement do
 #   set :questdict, QuestDict.new("dictionary","words1")
 # end

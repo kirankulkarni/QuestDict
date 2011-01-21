@@ -1,14 +1,21 @@
 # Implements QuestDict class 
 
+require 'uri'
 require 'mongo'
 require 'hpricot'
 
 
 class QuestDict
   attr_reader :db
-  def initialize (database,collection)
-    @db = Mongo::Connection.new.db(database).collection(collection)
-    @wordsdb = Mongo::Connection.new.db(database).collection(collection + '_words')
+  def initialize (collection)
+    # following three lines are directly copied from Mongohq docs page
+    # on Heroku
+    uri = URI.parse(ENV['MONGOHQ_URL'])
+    conn = Mongo::Connection.from_uri(ENV['MONGOHQ_URL'])
+    db = conn.db(uri.path.gsub(/^\//, ''))
+    
+    @db = db.collection(collection)
+    @wordsdb = db.collection(collection + '_words')
   end
 
   # Following method finds a given word in dictionary databse
