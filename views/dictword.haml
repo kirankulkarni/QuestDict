@@ -5,11 +5,14 @@
    
 - unless @word.empty?
   %h2== Word: #{@word}
-
-  %p Meanings:
-  %ol
-    - @meanings.each do |meaning|
-      %li= meaning[:meaning]
+  
+  - if @meanings.empty?
+    %p Entry not found
+  - else
+    %p Meanings:
+    %ol
+      - @meanings.each do |meaning|
+        %li== (#{meaning[:category]}) #{meaning[:meaning]}
 
 %hr/
 %p#credits
