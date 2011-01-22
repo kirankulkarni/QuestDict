@@ -115,6 +115,10 @@ class QuestDict
         str.force_encoding("macRoman") 
         str.encode("UTF-8")
       end
+      unless word.valid_encoding?
+        word.force_encoding("macRoman") 
+        word.encode("UTF-8")
+      end
 
       # Meaning follows character ")"  
       meaning= str.split(")")
