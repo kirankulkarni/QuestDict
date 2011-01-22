@@ -2,6 +2,10 @@ div#outerwrapper {
     margin:auto;
     width:60%;
 }
+div#searchbar{
+    margin: auto;
+    width: 250px;
+}
 h1#title {
     margin:auto;
     width:330px;
@@ -9,4 +13,15 @@ h1#title {
 p#credits {
     margin:auto;
     width:10%;
+}
+
+div#uploadouter {
+    margin:auto;
+    width:75%;
+    border-width: 1px;
+    border-style: outset;
+    border-radius: 5px;
+}
+
+div#uploadinner {
 }

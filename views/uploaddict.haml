@@ -8,15 +8,17 @@
                                           
   <b>e.g. &lt;P&gt;&lt;B&gt;Hello&lt;/B&gt; (&lt;I&gt;interj. n.&lt;/I&gt;) Used to greet someone&lt;/P&gt;</b>
 
-  I used Online Plain Text English Dictionary (http://www.mso.anu.edu.au/~ralph/OPTED/) to write this app.
-  
+  I used Online Plain Text English Dictionary (<a href=http://www.mso.anu.edu.au/~ralph/OPTED/>http://www.mso.anu.edu.au/~ralph/OPTED/</a>) to write this app.
+%div#uploadouter
+  Upload from URL: 
+  %form{:action => "/load", :method => "post"}
+    %p
+      %input{:type => "textbox", :name => "link", :id => "link"}
+      %input{:type => "submit", :value => "Load from URL"}
 
-%form{:method =>"post",:enctype =>"multipart/form-data"}
-  %input{:type =>"file",:name =>"file"}
-  %input{:type =>"submit",:value =>"Upload"}
-%hr/
-%form{:action => "/load", :method => "post"}
-  %p
-    %input{:type => "textbox", :name => "link", :id => "link"}
-    %input{:type => "submit", :value => "Load from URL"}
-        
+  %hr/
+  Saved file from Disk
+  %form{:method =>"post",:enctype =>"multipart/form-data"}
+    %input{:type =>"file",:name =>"file"}
+    %input{:type =>"submit",:value =>"Upload"}
+
