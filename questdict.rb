@@ -22,6 +22,9 @@ get '/search' do
       # not supported) and downcase it for searching.
       @word = params[:word].strip.split(" ")[0].downcase
       @meanings = questdict.find_meanings(@word)
+      if(@meanings.empty?)
+        @suggestions = questdict.get_suggestions(@word)
+      end
     end
   end
   haml :dictword
