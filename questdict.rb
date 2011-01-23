@@ -9,6 +9,11 @@ questdict = QuestDict.new("english")
 #   set :questdict, QuestDict.new("dictionary","words1")
 # end
 
+helpers do
+  include Rack::Utils
+end
+
+
 get '/' do
   haml :dictionary
 end

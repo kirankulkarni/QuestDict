@@ -5,7 +5,7 @@
       %input{:type => "submit", :value => "Search"}
    
 - unless @word.empty?
-  %h2== Word: #{@word}
+  %h2== Word: #{escape_html(@word)}
   
   - if @meanings.empty?
     %p Suggestions:
