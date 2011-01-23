@@ -216,25 +216,19 @@ class QuestDict
   # give suggestions. Currently gives word which is "closest" to given
   # word 
   def get_suggestions(string)
-    suggestions = ["","",""]
-    same_diff_suggestions = []
+    suggestions = []
     min_diff = 99999
     unless string.strip.empty?
       words = self.words_sw_letter(string.strip[0])
       words.each do |word|
         diff = QuestDictUtils.levenshtein_distance(string,word)
-        puts "#{word} : #{diff}, Min-diff: #{min_diff}"
         if diff < min_diff
           min_diff = diff
-          same_diff_suggestions = []
-          suggestions[0],suggestions[1],suggestions[2] = word, suggestions[0],suggestions[1]
+          suggestions = []
+          suggestions << word
         elsif diff == min_diff
-          same_diff_suggestions << word
+          suggestions << word
         end
-        
-      end
-      same_diff_suggestions.each do |suggestion|
-        suggestions << suggestion
       end
     end
     return suggestions
