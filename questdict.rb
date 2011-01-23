@@ -49,6 +49,9 @@ post '/uploaddict' do
 end
 
 post '/load' do
+  if(params["link"].empty?)
+    redirect '/uploaddict'
+  end 
   wordsdoc = Hpricot(open(params["link"].strip))
   unless questdict.parse_html_and_update_dictionary(wordsdoc)
     return haml :uploadfailed, :layout => false

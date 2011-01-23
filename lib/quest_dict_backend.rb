@@ -54,7 +54,7 @@ class QuestDict
           word_meaning_entry["meaning"] = word_meaning_entry["meaning"].strip
           
           # Search whether database has Meaning entries for this word
-          meanings = find_meanings(word_meaning_entry["word"])
+          meanings = self.find_meanings(word_meaning_entry["word"])
          
           if meanings.empty?  # New word, add word_meaning_entry
             @db.insert(word_meaning_entry)  # catch Databse insertion exceptions
@@ -129,7 +129,7 @@ class QuestDict
           # Categories of word is wrapped under <i> </i>
           db_wordentry.merge!("category" => (html_wordentry/"i").inner_html)
           db_wordentry.merge!("meaning" => meaning[1].strip)
-          count = count.succ if add_word(db_wordentry)
+          count = count.succ if self.add_word(db_wordentry)
         end
       end
     end
@@ -216,7 +216,7 @@ class QuestDict
     end
     return True
   end
-  
+
 
 end
 
